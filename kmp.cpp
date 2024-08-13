@@ -19,11 +19,10 @@ int main() {
         if(str[i] == str[len]) {
             ne[i] = ++len;//即ne[i] = ne[i - 1] + 1
             if(ne[i] == m) {
-                std::cout << i - m * 2 << std::endl;
+                std::cout << i - m * 2 << std::endl;//现只需找到与shortstr长度相同的next数组即可找到匹配字符串下标
                 break;
             }
         }
     }
-    //现只需找到与shortstr长度相同的next数组即可找到匹配字符串下标
     return 0;
 }
