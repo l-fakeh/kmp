@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<functional>
 int main() {
     std::string longstr;
     std::string shortstr;
@@ -8,7 +9,8 @@ int main() {
     int n = longstr.size(),m = shortstr.size();
     std::string str = shortstr + '#' + longstr;//合并longstr和shortstr --------#----------------------用-表示字符串
     std::vector<int> ne(str.size());
-    for(int i = 1; i < str.size(); i++) {
+    std::function<int()> strkmp = [&] () {
+        for(int i = 1; i < str.size(); i++) {
         int len = ne[i - 1];//len等于上一个数的next数组值
         while(len != 0 && str[i] != str[len]) {//当 当前数与str[len]不同 寻找上一个next数组并再次匹配当前数与str[len]
             len = ne[len - 1];
@@ -19,10 +21,13 @@ int main() {
         if(str[i] == str[len]) {
             ne[i] = ++len;//即ne[i] = ne[i - 1] + 1
             if(ne[i] == m) {
-                std::cout << i - m * 2 << std::endl;//现只需找到与shortstr长度相同的next数组即可找到匹配字符串下标
+                return i - m * 2;//现只需找到与shortstr长度相同的next数组即可找到匹配字符串下标
                 break;
             }
         }
-    }
+        }
+        return -1;
+    };
+    std::cout << strkmp() << std::endl;
     return 0;
 }
